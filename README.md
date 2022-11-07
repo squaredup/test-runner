@@ -1,5 +1,10 @@
 <h1>Storybook Test Runner</h1>
 
+## This is a fork of @storybook/test-runner.
+We're maintaining this version until the pr https://github.com/storybookjs/test-runner/pull/214 gets resolved.
+This reduces the flakiness seen in storybook testing
+
+
 Storybook test runner turns all of your stories into executable tests.
 
 <h2>Table of Contents</h2>
