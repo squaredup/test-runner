@@ -1,25 +1,27 @@
-import { relative } from 'path';
-import template from '@babel/template';
-import { userOrAutoTitle } from '@storybook/store';
+"use strict";
 
-import { getStorybookMetadata } from '../util';
-import { transformCsf } from '../csf/transformCsf';
-import type { FilePrefixer, TestPrefixer } from '../csf/transformCsf';
-import dedent from 'ts-dedent';
-
-export const filePrefixer = template(`
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.transformPlaywright = exports.testPrefixer = exports.filePrefixer = void 0;
+var _path = require("path");
+var _template = _interopRequireDefault(require("@babel/template"));
+var _store = require("@storybook/store");
+var _util = require("../util");
+var _transformCsf = require("../csf/transformCsf");
+var _tsDedent = _interopRequireDefault(require("ts-dedent"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+const filePrefixer = (0, _template.default)(`
   const global = require('global');
   const { setupPage } = require('@storybook/test-runner');
-`) as any as FilePrefixer;
-
-const coverageErrorMessage = dedent`
+`);
+exports.filePrefixer = filePrefixer;
+const coverageErrorMessage = (0, _tsDedent.default)`
   [Test runner] An error occurred when evaluating code coverage:
   The code in this story is not instrumented, which means the coverage setup is likely not correct.
   More info: https://github.com/storybookjs/test-runner#setting-up-code-coverage
 `;
-
-export const testPrefixer = template(
-  `
+const testPrefixer = (0, _template.default)(`
     console.log({ id: %%id%%, title: %%title%%, name: %%name%%, storyExport: %%storyExport%% });
     async () => {
       const testFn = async() => {
@@ -65,26 +67,26 @@ export const testPrefixer = template(
         }
       }
     }
-  `,
-  {
-    plugins: ['jsx'],
-  }
-) as any as TestPrefixer;
-
-const makeTitleFactory = (filename: string) => {
-  const { workingDir, normalizedStoriesEntries } = getStorybookMetadata();
-  const filePath = './' + relative(workingDir, filename);
-
-  return (userTitle: string) => userOrAutoTitle(filePath, normalizedStoriesEntries, userTitle);
+  `, {
+  plugins: ['jsx']
+});
+exports.testPrefixer = testPrefixer;
+const makeTitleFactory = filename => {
+  const {
+    workingDir,
+    normalizedStoriesEntries
+  } = (0, _util.getStorybookMetadata)();
+  const filePath = './' + (0, _path.relative)(workingDir, filename);
+  return userTitle => (0, _store.userOrAutoTitle)(filePath, normalizedStoriesEntries, userTitle);
 };
-
-export const transformPlaywright = (src: string, filename: string) => {
-  const result = transformCsf(src, {
+const transformPlaywright = (src, filename) => {
+  const result = (0, _transformCsf.transformCsf)(src, {
     filePrefixer,
     testPrefixer,
     insertTestIfEmpty: true,
     clearBody: true,
-    makeTitle: makeTitleFactory(filename),
+    makeTitle: makeTitleFactory(filename)
   });
   return result;
 };
+exports.transformPlaywright = transformPlaywright;

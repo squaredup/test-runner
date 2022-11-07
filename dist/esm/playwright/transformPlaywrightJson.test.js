@@ -1,5 +1,4 @@
 import { transformPlaywrightJson } from './transformPlaywrightJson';
-
 describe('Playwright Json', () => {
   describe('v4 indexes', () => {
     it('should generate a test for each story', () => {
@@ -10,21 +9,21 @@ describe('Playwright Json', () => {
             id: 'example-header--logged-in',
             title: 'Example/Header',
             name: 'Logged In',
-            importPath: './stories/basic/Header.stories.js',
+            importPath: './stories/basic/Header.stories.js'
           },
           'example-header--logged-out': {
             id: 'example-header--logged-out',
             title: 'Example/Header',
             name: 'Logged Out',
-            importPath: './stories/basic/Header.stories.js',
+            importPath: './stories/basic/Header.stories.js'
           },
           'example-page--logged-in': {
             id: 'example-page--logged-in',
             title: 'Example/Page',
             name: 'Logged In',
-            importPath: './stories/basic/Page.stories.js',
-          },
-        },
+            importPath: './stories/basic/Page.stories.js'
+          }
+        }
       };
       expect(transformPlaywrightJson(input)).toMatchInlineSnapshot(`
         Object {
@@ -228,7 +227,6 @@ describe('Playwright Json', () => {
         }
       `);
     });
-
     it('should skip docs entries', () => {
       const input = {
         v: 4,
@@ -238,15 +236,15 @@ describe('Playwright Json', () => {
             id: 'example-introduction--page',
             title: 'Example/Introduction',
             name: 'Page',
-            importPath: './stories/basic/Introduction.stories.mdx',
+            importPath: './stories/basic/Introduction.stories.mdx'
           },
           'example-page--logged-in': {
             id: 'example-page--logged-in',
             title: 'Example/Page',
             name: 'Logged In',
-            importPath: './stories/basic/Page.stories.js',
-          },
-        },
+            importPath: './stories/basic/Page.stories.js'
+          }
+        }
       };
       expect(transformPlaywrightJson(input)).toMatchInlineSnapshot(`
         Object {
@@ -322,7 +320,6 @@ describe('Playwright Json', () => {
       `);
     });
   });
-
   describe('v3 indexes', () => {
     it('should generate a test for each story', () => {
       const input = {
@@ -338,8 +335,8 @@ describe('Playwright Json', () => {
             parameters: {
               __id: 'example-header--logged-in',
               docsOnly: false,
-              fileName: './stories/basic/Header.stories.js',
-            },
+              fileName: './stories/basic/Header.stories.js'
+            }
           },
           'example-header--logged-out': {
             id: 'example-header--logged-out',
@@ -351,8 +348,8 @@ describe('Playwright Json', () => {
             parameters: {
               __id: 'example-header--logged-out',
               docsOnly: false,
-              fileName: './stories/basic/Header.stories.js',
-            },
+              fileName: './stories/basic/Header.stories.js'
+            }
           },
           'example-page--logged-in': {
             id: 'example-page--logged-in',
@@ -364,10 +361,10 @@ describe('Playwright Json', () => {
             parameters: {
               __id: 'example-page--logged-in',
               docsOnly: false,
-              fileName: './stories/basic/Page.stories.js',
-            },
-          },
-        },
+              fileName: './stories/basic/Page.stories.js'
+            }
+          }
+        }
       };
       expect(transformPlaywrightJson(input)).toMatchInlineSnapshot(`
         Object {
@@ -571,7 +568,6 @@ describe('Playwright Json', () => {
         }
       `);
     });
-
     it('should skip docs-only stories', () => {
       const input = {
         v: 3,
@@ -586,8 +582,8 @@ describe('Playwright Json', () => {
             parameters: {
               __id: 'example-introduction--page',
               docsOnly: true,
-              fileName: './stories/basic/Introduction.stories.mdx',
-            },
+              fileName: './stories/basic/Introduction.stories.mdx'
+            }
           },
           'example-page--logged-in': {
             id: 'example-page--logged-in',
@@ -599,10 +595,10 @@ describe('Playwright Json', () => {
             parameters: {
               __id: 'example-page--logged-in',
               docsOnly: false,
-              fileName: './stories/basic/Page.stories.js',
-            },
-          },
-        },
+              fileName: './stories/basic/Page.stories.js'
+            }
+          }
+        }
       };
       expect(transformPlaywrightJson(input)).toMatchInlineSnapshot(`
         Object {

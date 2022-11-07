@@ -1,52 +1,42 @@
-import dedent from 'ts-dedent';
-import path from 'path';
-import * as coreCommon from '@storybook/core-common';
-import * as storybookMain from '../util/getStorybookMain';
+"use strict";
 
-import { transformPlaywright } from './transformPlaywright';
-
+var _tsDedent = _interopRequireDefault(require("ts-dedent"));
+var _path = _interopRequireDefault(require("path"));
+var coreCommon = _interopRequireWildcard(require("@storybook/core-common"));
+var storybookMain = _interopRequireWildcard(require("../util/getStorybookMain"));
+var _transformPlaywright = require("./transformPlaywright");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 jest.mock('@storybook/core-common');
-
 expect.addSnapshotSerializer({
-  print: (val: any) => val.trim(),
-  test: (val: any) => true,
+  print: val => val.trim(),
+  test: val => true
 });
-
 describe('Playwright', () => {
   beforeEach(() => {
-    const relativeSpy = jest.spyOn(path, 'relative');
+    const relativeSpy = jest.spyOn(_path.default, 'relative');
     relativeSpy.mockReturnValueOnce('stories/basic/Header.stories.js');
     jest.spyOn(storybookMain, 'getStorybookMain').mockImplementation(() => ({
-      stories: [
-        {
-          directory: '../stories/basic',
-          titlePrefix: 'Example',
-        },
-      ],
+      stories: [{
+        directory: '../stories/basic',
+        titlePrefix: 'Example'
+      }]
     }));
-    jest.spyOn(coreCommon, 'normalizeStories').mockImplementation(() => [
-      {
-        titlePrefix: 'Example',
-        files: '**/*.stories.@(mdx|tsx|ts|jsx|js)',
-        directory: './stories/basic',
-        importPathMatcher:
-          /^\.[\\/](?:stories\/basic(?:\/(?!\.)(?:(?:(?!(?:^|\/)\.).)*?)\/|\/|$)(?!\.)(?=.)[^/]*?\.stories\.(mdx|tsx|ts|jsx|js))$/,
-      },
-    ]);
+    jest.spyOn(coreCommon, 'normalizeStories').mockImplementation(() => [{
+      titlePrefix: 'Example',
+      files: '**/*.stories.@(mdx|tsx|ts|jsx|js)',
+      directory: './stories/basic',
+      importPathMatcher: /^\.[\\/](?:stories\/basic(?:\/(?!\.)(?:(?:(?!(?:^|\/)\.).)*?)\/|\/|$)(?!\.)(?=.)[^/]*?\.stories\.(mdx|tsx|ts|jsx|js))$/
+    }]);
   });
-
   const filename = './stories/basic/Header.stories.js';
   it('should generate a play test when the story has a play function', () => {
-    expect(
-      transformPlaywright(
-        dedent`
+    expect((0, _transformPlaywright.transformPlaywright)((0, _tsDedent.default)`
         export default { title: 'foo/bar', component: Button };
         export const A = () => {};
         A.play = () => {};
-      `,
-        filename
-      )
-    ).toMatchInlineSnapshot(`
+      `, filename)).toMatchInlineSnapshot(`
       const global = require('global');
 
       const {
@@ -121,15 +111,10 @@ describe('Playwright', () => {
     `);
   });
   it('should generate a smoke test when story does not have a play function', () => {
-    expect(
-      transformPlaywright(
-        dedent`
+    expect((0, _transformPlaywright.transformPlaywright)((0, _tsDedent.default)`
         export default { title: 'foo/bar' };
         export const A = () => {};
-      `,
-        filename
-      )
-    ).toMatchInlineSnapshot(`
+      `, filename)).toMatchInlineSnapshot(`
       const global = require('global');
 
       const {
@@ -203,17 +188,11 @@ describe('Playwright', () => {
       }
     `);
   });
-
   it('should generate a smoke test with auto title', () => {
-    expect(
-      transformPlaywright(
-        dedent`
+    expect((0, _transformPlaywright.transformPlaywright)((0, _tsDedent.default)`
         export default { component: Button };
         export const A = () => {};
-      `,
-        filename
-      )
-    ).toMatchInlineSnapshot(`
+      `, filename)).toMatchInlineSnapshot(`
       const global = require('global');
 
       const {
