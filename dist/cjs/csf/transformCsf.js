@@ -29,15 +29,15 @@ const prefixFunction = (key, title, input, testPrefixer) => {
   return stmt.expression;
 };
 const makePlayTest = (key, title, metaOrStoryPlay, testPrefix) => {
-  return [t.expressionStatement(t.callExpression(t.identifier("it"), [t.stringLiteral(!!metaOrStoryPlay ? "play-test" : "smoke-test"), prefixFunction(key, title, metaOrStoryPlay, testPrefix)]))];
+  return [t.expressionStatement(t.callExpression(t.identifier('it'), [t.stringLiteral(!!metaOrStoryPlay ? 'play-test' : 'smoke-test'), prefixFunction(key, title, metaOrStoryPlay, testPrefix)]))];
 };
 const makeDescribe = (key, tests, beforeEachBlock) => {
   const blockStatements = beforeEachBlock ? [beforeEachBlock, ...tests] : tests;
-  return t.expressionStatement(t.callExpression(t.identifier("describe"), [t.stringLiteral(key), t.arrowFunctionExpression([], t.blockStatement(blockStatements))]));
+  return t.expressionStatement(t.callExpression(t.identifier('describe'), [t.stringLiteral(key), t.arrowFunctionExpression([], t.blockStatement(blockStatements))]));
 };
 const makeBeforeEach = beforeEachPrefixer => {
   const stmt = beforeEachPrefixer();
-  return t.expressionStatement(t.callExpression(t.identifier("beforeEach"), [stmt.expression]));
+  return t.expressionStatement(t.callExpression(t.identifier('beforeEach'), [stmt.expression]));
 };
 const makeArray = templateResult => Array.isArray(templateResult) ? templateResult : [templateResult];
 exports.makeArray = makeArray;
@@ -71,7 +71,7 @@ const transformCsf = (code, {
     return null;
   }).filter(Boolean);
   const allTests = playTests;
-  let result = "";
+  let result = '';
 
   // FIXME: insert between imports
   if (filePrefixer) {

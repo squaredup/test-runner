@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import { loadCsf } from "@storybook/csf-tools";
-import * as t from "@babel/types";
-import generate from "@babel/generator";
-import { storyNameFromExport, toId } from "@storybook/csf";
-import dedent from "ts-dedent";
+import { loadCsf } from '@storybook/csf-tools';
+import * as t from '@babel/types';
+import generate from '@babel/generator';
+import { storyNameFromExport, toId } from '@storybook/csf';
+import dedent from 'ts-dedent';
 const logger = console;
 const prefixFunction = (key, title, input, testPrefixer) => {
   const name = storyNameFromExport(key);
@@ -19,15 +19,15 @@ const prefixFunction = (key, title, input, testPrefixer) => {
   return stmt.expression;
 };
 const makePlayTest = (key, title, metaOrStoryPlay, testPrefix) => {
-  return [t.expressionStatement(t.callExpression(t.identifier("it"), [t.stringLiteral(!!metaOrStoryPlay ? "play-test" : "smoke-test"), prefixFunction(key, title, metaOrStoryPlay, testPrefix)]))];
+  return [t.expressionStatement(t.callExpression(t.identifier('it'), [t.stringLiteral(!!metaOrStoryPlay ? 'play-test' : 'smoke-test'), prefixFunction(key, title, metaOrStoryPlay, testPrefix)]))];
 };
 const makeDescribe = (key, tests, beforeEachBlock) => {
   const blockStatements = beforeEachBlock ? [beforeEachBlock, ...tests] : tests;
-  return t.expressionStatement(t.callExpression(t.identifier("describe"), [t.stringLiteral(key), t.arrowFunctionExpression([], t.blockStatement(blockStatements))]));
+  return t.expressionStatement(t.callExpression(t.identifier('describe'), [t.stringLiteral(key), t.arrowFunctionExpression([], t.blockStatement(blockStatements))]));
 };
 const makeBeforeEach = beforeEachPrefixer => {
   const stmt = beforeEachPrefixer();
-  return t.expressionStatement(t.callExpression(t.identifier("beforeEach"), [stmt.expression]));
+  return t.expressionStatement(t.callExpression(t.identifier('beforeEach'), [stmt.expression]));
 };
 export const makeArray = templateResult => Array.isArray(templateResult) ? templateResult : [templateResult];
 export const transformCsf = (code, {
@@ -60,7 +60,7 @@ export const transformCsf = (code, {
     return null;
   }).filter(Boolean);
   const allTests = playTests;
-  let result = "";
+  let result = '';
 
   // FIXME: insert between imports
   if (filePrefixer) {

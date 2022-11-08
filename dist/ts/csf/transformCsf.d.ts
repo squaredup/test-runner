@@ -1,4 +1,4 @@
-import * as t from "@babel/types";
+import * as t from '@babel/types';
 export interface TestContext {
     storyExport?: t.Identifier;
     name: t.Literal;

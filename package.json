@@ -1,5 +1,5 @@
 {
-  "name": "@storybook/test-runner",
+  "name": "squaredup-test-runner",
   "version": "0.7.2",
   "description": "Test runner for Storybook stories",
   "keywords": [
@@ -10,10 +10,6 @@
     "testing-library",
     "playwright"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/storybookjs/test-runner"
-  },
   "author": "shilman",
   "license": "MIT",
   "main": "dist/cjs/index.js",
