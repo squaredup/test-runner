@@ -1,5 +1,5 @@
 {
-  "name": "squaredup-test-runner",
+  "name": "@squaredup/test-runner",
   "version": "0.7.2",
   "description": "Test runner for Storybook stories",
   "keywords": [
